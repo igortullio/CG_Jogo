@@ -18,7 +18,7 @@ import java.awt.event.WindowEvent;
 
 public class Principal  implements GLEventListener, KeyListener {
 
-    Jogador j1, j2;
+    Jogador j1, j2, j3, j4;
     Bola b1;
     Campo campo;
     GL2 gl;
@@ -31,10 +31,11 @@ public class Principal  implements GLEventListener, KeyListener {
         GLCapabilities caps = new GLCapabilities(glp);
         GLCanvas canvas = new GLCanvas(caps);
 
-        Frame frame = new Frame("Jogador");
+        Frame frame = new Frame("CG - Futebol Americano");
         frame.setSize(1900, 1000);
         frame.add(canvas);
         frame.setVisible(true);
+        frame.setExtendedState(Frame.MAXIMIZED_BOTH);  //Deitar frame maximizado      
 
         frame.addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
@@ -57,6 +58,8 @@ public class Principal  implements GLEventListener, KeyListener {
         
         j1 = new Jogador();
         j2 = new Jogador();
+        j3 = new Jogador();
+        j4 = new Jogador();
         b1 = new Bola();
         campo = new Campo();
         gl = glad.getGL().getGL2();
@@ -77,10 +80,19 @@ public class Principal  implements GLEventListener, KeyListener {
         gl.glClear(GL.GL_COLOR_BUFFER_BIT);
         //gl.glColor3f(0.0f, 0.0f, 0.0f);
         
-        j1.desenhaJogador(gl, glu, glut, 0, 0, 0);
-        //j2.desenhaJogador(gl, glu, glut, 0, 2, 0);
-        b1.desenhaBola(gl, glu, glut);
+        //gl.glLoadIdentity();
+        
+        /*glu.gluLookAt(0f, 0f, 0f, 
+                      0, 0, 0, 
+                      0, 0, 0);*/
+                      
         campo.renderizaCampo(gl, glu, glut);
+        
+        j1.desenhaJogador(gl, glu, glut, 0.0f, 2.0f, 7.0f);
+        j2.desenhaJogador(gl, glu, glut, 4.0f, 2.0f, 5.5f);
+        j3.desenhaJogador(gl, glu, glut, -4.0f, 2.0f, 5.5f);
+        j3.desenhaJogador(gl, glu, glut, 2.0f, 2.0f, 5.5f);
+        //b1.desenhaBola(gl, glu, glut);
         
     }
 
