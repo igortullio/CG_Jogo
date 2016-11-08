@@ -32,8 +32,10 @@ public class Jogador implements MouseListener, KeyListener {
                 gl.glPushMatrix();
                     gl.glTranslatef (0.0f, -3.2f, 0.0f);
                     gl.glScalef (xEscalaTronco, yEscalaTronco, zEscalaTronco);
-                    //glut.glutSolidCube(0.3f);
-                    glut.glutWireCube (0.3f);
+                    gl.glColor3f(0.0f, 0.0f, 1.0f);
+                    glut.glutSolidCube(0.3f);
+                    //gl.glColor3f(255.0f, 255.0f, 255.0f);
+                    //glut.glutWireCube (0.3f);
                 gl.glPopMatrix();              
                             
             gl.glPopMatrix();
@@ -42,7 +44,9 @@ public class Jogador implements MouseListener, KeyListener {
             gl.glPushMatrix();
                 
                 gl.glTranslatef (0.0f, -2.85f, 0.0f);
-                glut.glutWireCube (0.2f);
+                gl.glColor3f(1, 0.87f, 0.67f);
+                glut.glutSolidCube (0.2f);
+                gl.glColor3f(255.0f, 255.0f, 255.0f);
             
             gl.glPopMatrix();                                               
                         
@@ -53,7 +57,8 @@ public class Jogador implements MouseListener, KeyListener {
                 gl.glTranslatef (-0.1f, -3.6f, 0.0f);                                                             
                 gl.glPushMatrix();                    
                     gl.glScalef (xEscalaPerna, yEscalaPerna, zEscalaPerna);
-                    glut.glutWireCube (0.2f);
+                    gl.glColor3f(1, 0.87f, 0.67f);
+                    glut.glutSolidCube (0.2f);
                 gl.glPopMatrix();   
                             
                                                             
@@ -66,7 +71,7 @@ public class Jogador implements MouseListener, KeyListener {
                 gl.glTranslatef (0.1f, -3.6f, 0.0f);                             
                 gl.glPushMatrix();                    
                     gl.glScalef (xEscalaPerna, yEscalaPerna, zEscalaPerna);
-                    glut.glutWireCube (0.2f);
+                    glut.glutSolidCube (0.2f);
                 gl.glPopMatrix();               
                                                                                             
             gl.glPopMatrix();
@@ -80,7 +85,7 @@ public class Jogador implements MouseListener, KeyListener {
                 gl.glTranslatef (0.0f, -0f, 0.0f);  
                 gl.glPushMatrix();
                     gl.glScalef (xEscalaOmbro, yEscalaOmbro, zEscalaOmbro);                    
-                    glut.glutWireCube (0.2f);
+                    glut.glutSolidCube (0.2f);
                 gl.glPopMatrix();
                                     
             gl.glPopMatrix();            
@@ -93,7 +98,7 @@ public class Jogador implements MouseListener, KeyListener {
                 gl.glTranslatef (-0.0f, -0f, 0.0f);
                 gl.glPushMatrix();
                     gl.glScalef (xEscalaOmbro, yEscalaOmbro, zEscalaOmbro);
-                    glut.glutWireCube (0.2f);
+                    glut.glutSolidCube (0.2f);
                 gl.glPopMatrix();          
     
             gl.glPopMatrix();
