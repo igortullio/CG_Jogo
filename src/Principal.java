@@ -35,7 +35,7 @@ public class Principal  implements GLEventListener, KeyListener {
         frame.setSize(1900, 1000);
         frame.add(canvas);
         frame.setVisible(true);
-        frame.setExtendedState(Frame.MAXIMIZED_BOTH);  //Deitar frame maximizado      
+        frame.setExtendedState(Frame.MAXIMIZED_BOTH);  //Deixar frame maximizado 
 
         frame.addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
