@@ -14,10 +14,15 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import javax.swing.JFrame;
 
 
 public class Principal  implements GLEventListener, KeyListener {
 
+    static JFrame frame;// A janela
+    static Menu pnMenu; // JPanel do Menu
+    static GLCanvas canvas;
+    
     Jogador j1, j2, j3, j4;
     Bola b1;
     Campo campo;
@@ -29,13 +34,15 @@ public class Principal  implements GLEventListener, KeyListener {
         
         GLProfile glp = GLProfile.getDefault();
         GLCapabilities caps = new GLCapabilities(glp);
-        GLCanvas canvas = new GLCanvas(caps);
+        canvas = new GLCanvas(caps);
+        pnMenu = new Menu(); // cria o objeto do tipo JPanel
 
-        Frame frame = new Frame("CG - Futebol Americano");
+        frame = new JFrame("CG - Futebol Americano");
         frame.setSize(1900, 1000);
-        frame.add(canvas);
+//        frame.add(canvas);
+        frame.add(pnMenu); // adiciona o JPanel no frame
         frame.setVisible(true);
-        frame.setExtendedState(Frame.MAXIMIZED_BOTH);  //Deixar frame maximizado 
+        frame.setExtendedState(JFrame.MAXIMIZED_BOTH);  //Deixar frame maximizado 
 
         frame.addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
@@ -48,11 +55,16 @@ public class Principal  implements GLEventListener, KeyListener {
         canvas.addKeyListener(app);
         canvas.setVisible(true);
         
+        pnMenu.addKeyListener(app);
+        pnMenu.setVisible(true);
+        
         FPSAnimator animator = new FPSAnimator(canvas, 60);
         animator.start();
         
     }        
-
+    
+    
+    
     @Override
     public void init(GLAutoDrawable glad) {
         
