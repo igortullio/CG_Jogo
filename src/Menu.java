@@ -27,6 +27,7 @@ public class Menu extends javax.swing.JPanel {
      * Creates new form pnMenu
      */
     public Menu() {
+        System.out.printf("Tela %dx%d\n", d.width, d.height);
         initComponents();
         
         //carregar a imagem do menu
@@ -64,27 +65,34 @@ public class Menu extends javax.swing.JPanel {
         setMinimumSize(new java.awt.Dimension(d.height, d.width));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        btIniciar.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         btIniciar.setText("Iniciar Jogo!");
         btIniciar.setToolTipText("Clique aqui para iniciar o jogo");
         btIniciar.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         btIniciar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btIniciar.setMaximumSize(new java.awt.Dimension(51, 23));
+        btIniciar.setMinimumSize(new java.awt.Dimension(51, 23));
+        btIniciar.setPreferredSize(new java.awt.Dimension(51, 23));
         btIniciar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btIniciarActionPerformed(evt);
             }
         });
-        add(btIniciar, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 210, 110, -1));
+        add(btIniciar, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 210, 210, 80));
 
-        lbTitulo.setText("jLabel1");
-        add(lbTitulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 60, 40, 20));
+        lbTitulo.setFont(new java.awt.Font("Consolas", 0, 48)); // NOI18N
+        lbTitulo.setText("FumbleCG");
+        lbTitulo.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        add(lbTitulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 60, 220, 110));
 
+        btSair.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         btSair.setText("Sair");
         btSair.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btSairActionPerformed(evt);
             }
         });
-        add(btSair, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 420, 60, -1));
+        add(btSair, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 300, 210, 80));
     }// </editor-fold>//GEN-END:initComponents
 
     private void btIniciarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btIniciarActionPerformed
