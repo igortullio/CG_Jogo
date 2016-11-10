@@ -9,6 +9,7 @@ import com.jogamp.opengl.awt.GLCanvas;
 import com.jogamp.opengl.glu.GLU;
 import com.jogamp.opengl.util.FPSAnimator;
 import com.jogamp.opengl.util.gl2.GLUT;
+import java.awt.BorderLayout;
 import java.awt.Frame;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -20,7 +21,7 @@ import javax.swing.JFrame;
 public class Principal  implements GLEventListener, KeyListener {
 
     static JFrame frame;// A janela
-    static Menu pnMenu; // JPanel do Menu
+    static Menu menu; // JPanel do Menu
     static GLCanvas canvas;
     
     Jogador j1, j2, j3, j4;
@@ -35,14 +36,15 @@ public class Principal  implements GLEventListener, KeyListener {
         GLProfile glp = GLProfile.getDefault();
         GLCapabilities caps = new GLCapabilities(glp);
         canvas = new GLCanvas(caps);
-        pnMenu = new Menu(); // cria o objeto do tipo JPanel
+        
+        menu = new Menu(); // cria o objeto do tipo JPanel
 
         frame = new JFrame("CG - Futebol Americano");
         frame.setSize(1900, 1000);
-//        frame.add(canvas);
-        frame.add(pnMenu); // adiciona o JPanel no frame
+        frame.add(menu, BorderLayout.CENTER);
         frame.setVisible(true);
         frame.setExtendedState(JFrame.MAXIMIZED_BOTH);  //Deixar frame maximizado 
+        
 
         frame.addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
@@ -53,10 +55,11 @@ public class Principal  implements GLEventListener, KeyListener {
         Principal app = new Principal();
         canvas.addGLEventListener(app);
         canvas.addKeyListener(app);
-        canvas.setVisible(true);
         
-        pnMenu.addKeyListener(app);
-        pnMenu.setVisible(true);
+        menu.addKeyListener(app);
+        
+        canvas.setVisible(false);
+        menu.setVisible(true);
         
         FPSAnimator animator = new FPSAnimator(canvas, 60);
         animator.start();
