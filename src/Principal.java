@@ -9,15 +9,21 @@ import com.jogamp.opengl.awt.GLCanvas;
 import com.jogamp.opengl.glu.GLU;
 import com.jogamp.opengl.util.FPSAnimator;
 import com.jogamp.opengl.util.gl2.GLUT;
+import java.awt.BorderLayout;
 import java.awt.Frame;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import javax.swing.JFrame;
 
 
 public class Principal  implements GLEventListener, KeyListener {
 
+    static JFrame frame;// A janela
+    static Menu menu; // JPanel do Menu
+    static GLCanvas canvas;
+    
     Jogador j1, j2, j3, j4;
     Bola b1;
     Campo campo;
@@ -29,13 +35,16 @@ public class Principal  implements GLEventListener, KeyListener {
         
         GLProfile glp = GLProfile.getDefault();
         GLCapabilities caps = new GLCapabilities(glp);
-        GLCanvas canvas = new GLCanvas(caps);
+        canvas = new GLCanvas(caps);
+        
+        menu = new Menu(); // cria o objeto do tipo JPanel
 
-        Frame frame = new Frame("CG - Futebol Americano");
+        frame = new JFrame("CG - Futebol Americano");
         frame.setSize(1900, 1000);
-        frame.add(canvas);
+        frame.add(menu, BorderLayout.CENTER);
         frame.setVisible(true);
-        frame.setExtendedState(Frame.MAXIMIZED_BOTH);  //Deixar frame maximizado 
+        frame.setExtendedState(JFrame.MAXIMIZED_BOTH);  //Deixar frame maximizado 
+        
 
         frame.addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
@@ -46,13 +55,19 @@ public class Principal  implements GLEventListener, KeyListener {
         Principal app = new Principal();
         canvas.addGLEventListener(app);
         canvas.addKeyListener(app);
-        canvas.setVisible(true);
+        
+        menu.addKeyListener(app);
+        
+        canvas.setVisible(false);
+        menu.setVisible(true);
         
         FPSAnimator animator = new FPSAnimator(canvas, 60);
         animator.start();
         
     }        
-
+    
+    
+    
     @Override
     public void init(GLAutoDrawable glad) {
         
