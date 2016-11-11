@@ -10,7 +10,6 @@ import com.jogamp.opengl.glu.GLU;
 import com.jogamp.opengl.util.FPSAnimator;
 import com.jogamp.opengl.util.gl2.GLUT;
 import java.awt.BorderLayout;
-import java.awt.Frame;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.WindowAdapter;
@@ -20,9 +19,10 @@ import javax.swing.JFrame;
 
 public class Principal  implements GLEventListener, KeyListener {
 
-    static JFrame frame;// A janela
+    /*----- Variáveis da classe -----*/
+    static JFrame frame; // A janela
     static Menu menu; // JPanel do Menu
-    static GLCanvas canvas;
+    static GLCanvas canvas; // tela do jogo
     
     private boolean luz;
 
@@ -82,10 +82,18 @@ public class Principal  implements GLEventListener, KeyListener {
         gl = glad.getGL().getGL2();
         glu = new GLU();
         glut = new GLUT();
+        luz = true;
         
         //Habilita a iluminação
         gl.glEnable(GL2.GL_LIGHTING);
         gl.glEnable(GL2.GL_COLOR_MATERIAL);
+        
+        // Habilita o modelo de colorização de Gouraud
+        gl.glShadeModel(GL2.GL_SMOOTH);
+        
+        gl.glColorMaterial(GL2.GL_FRONT_AND_BACK, GL2.GL_AMBIENT_AND_DIFFUSE);	
+
+
         
     }
 
@@ -97,15 +105,19 @@ public class Principal  implements GLEventListener, KeyListener {
     @Override
     public void display(GLAutoDrawable glad) {
         
-        
-        gl.glClear(GL.GL_COLOR_BUFFER_BIT);
+        gl.glClear(GL.GL_COLOR_BUFFER_BIT | GL.GL_DEPTH_BUFFER_BIT);
         //gl.glColor3f(0.0f, 0.0f, 0.0f);
         
-        //gl.glLoadIdentity();
+//        gl.glLoadIdentity();
         
         /*glu.gluLookAt(0f, 0f, 0f, 
                       0, 0, 0, 
                       0, 0, 0);*/
+        // acende ou apaga a luz dependendo do valor de "luz"
+        if (luz)
+            gl.glEnable(GL2.GL_LIGHT0);
+        else
+            gl.glDisable(GL2.GL_LIGHT0);
         defineIluminacao();
                       
         campo.renderizaCampo(gl, glu, glut);
@@ -120,11 +132,25 @@ public class Principal  implements GLEventListener, KeyListener {
     }
 
     private void defineIluminacao() {
-        //Define os parâmetros através de vetores RGBA - o último valor deve ser sempre 1.0f
+        
+        float posicaoLuz[]={-1.0f, 1.0f, -1.0f, 0.0f}; // �ltimo par�metro: 0-direcional, 1-pontual/posicional 
+        
+        //Define os parâmetros através de vetores RGBA - o último valor deve ser sempre 1.0f 
+      //float   vetor[]=  {  r ,   g ,   b ,   a };  
         float luzDifusa[]={1.0f, 1.0f, 1.0f, 1.0f};  
-        float posicaoLuz[]={-40.0f, 60.0f, -50.0f, 0.0f};
+
+        //Define os parâmetros da luz de n�mero 0
         gl.glLightfv(GL2.GL_LIGHT0, GL2.GL_POSITION, posicaoLuz, 0 );
         gl.glLightfv(GL2.GL_LIGHT0, GL2.GL_DIFFUSE, luzDifusa, 0 );
+        
+        // Brilho do material
+        float especularidade[]={1.0f, 1.0f, 1.0f, 1.0f};
+        int especMaterial = 20;
+
+        // Define a reflectância do material 
+        gl.glMaterialfv(GL.GL_FRONT, GL2.GL_SPECULAR, especularidade, 0);
+        // Define a concentra��o do brilho
+        gl.glMateriali(GL.GL_FRONT, GL2.GL_SHININESS, especMaterial);
 
     }
 
@@ -145,7 +171,7 @@ public class Principal  implements GLEventListener, KeyListener {
     @Override
     public void keyPressed(KeyEvent e) {
         switch (e.getKeyCode()){
-            case KeyEvent.VK_F1:        luz = !luz;
+            case KeyEvent.VK_F1:        luz = !luz; System.out.println("luz = "+luz);
             break;
             case KeyEvent.VK_ESCAPE:    System.exit(0);
             break;
