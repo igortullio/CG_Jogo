@@ -24,6 +24,8 @@ public class Principal  implements GLEventListener, KeyListener {
     static Menu menu; // JPanel do Menu
     static GLCanvas canvas;
     
+    private boolean luz;
+
     Jogador j1, j2, j3, j4;
     Bola b1;
     Campo campo;
@@ -40,7 +42,8 @@ public class Principal  implements GLEventListener, KeyListener {
         menu = new Menu(); // cria o objeto do tipo JPanel
 
         frame = new JFrame("CG - Futebol Americano");
-        frame.setSize(1900, 1000);
+        frame.setSize(menu.d);
+        menu.setSize(menu.d);
         frame.add(menu, BorderLayout.CENTER);
         frame.setVisible(true);
         frame.setExtendedState(JFrame.MAXIMIZED_BOTH);  //Deixar frame maximizado 
@@ -55,9 +58,8 @@ public class Principal  implements GLEventListener, KeyListener {
         Principal app = new Principal();
         canvas.addGLEventListener(app);
         canvas.addKeyListener(app);
-        
         menu.addKeyListener(app);
-        
+                
         canvas.setVisible(false);
         menu.setVisible(true);
         
@@ -81,6 +83,10 @@ public class Principal  implements GLEventListener, KeyListener {
         glu = new GLU();
         glut = new GLUT();
         
+        //Habilita a iluminação
+        gl.glEnable(GL2.GL_LIGHTING);
+        gl.glEnable(GL2.GL_COLOR_MATERIAL);
+        
     }
 
     @Override
@@ -100,22 +106,33 @@ public class Principal  implements GLEventListener, KeyListener {
         /*glu.gluLookAt(0f, 0f, 0f, 
                       0, 0, 0, 
                       0, 0, 0);*/
+        defineIluminacao();
                       
         campo.renderizaCampo(gl, glu, glut);
         
+      //jx.desenhaJogador(gl, glu, glut,   x ,   y ,   z );
         j1.desenhaJogador(gl, glu, glut, 0.0f, 2.0f, 7.0f);
         j2.desenhaJogador(gl, glu, glut, 4.0f, 2.0f, 5.5f);
         j3.desenhaJogador(gl, glu, glut, -4.0f, 2.0f, 5.5f);
         j3.desenhaJogador(gl, glu, glut, 2.0f, 2.0f, 5.5f);
-        //b1.desenhaBola(gl, glu, glut);
+//        b1.desenhaBola(gl, glu, glut);
         
     }
 
+    private void defineIluminacao() {
+        //Define os parâmetros através de vetores RGBA - o último valor deve ser sempre 1.0f
+        float luzDifusa[]={1.0f, 1.0f, 1.0f, 1.0f};  
+        float posicaoLuz[]={-40.0f, 60.0f, -50.0f, 0.0f};
+        gl.glLightfv(GL2.GL_LIGHT0, GL2.GL_POSITION, posicaoLuz, 0 );
+        gl.glLightfv(GL2.GL_LIGHT0, GL2.GL_DIFFUSE, luzDifusa, 0 );
+
+    }
+
     @Override
-    public void reshape(GLAutoDrawable glad, int x, int y, int w, int h) {
+    public void reshape(GLAutoDrawable glad, int x, int y, int width, int heigth) {
      
         gl.glMatrixMode(GL2.GL_PROJECTION);
-        glu.gluPerspective(65.0, (float) w / (float) h, 1.0, 20.0);
+        glu.gluPerspective(65.0, (float) width / (float) heigth, 1.0, 20.0);
         gl.glTranslatef(0.0f, 0.0f, -10.0f);
         
     }
@@ -127,7 +144,12 @@ public class Principal  implements GLEventListener, KeyListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
-        
+        switch (e.getKeyCode()){
+            case KeyEvent.VK_F1:        luz = !luz;
+            break;
+            case KeyEvent.VK_ESCAPE:    System.exit(0);
+            break;
+        }
     }
 
     @Override

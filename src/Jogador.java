@@ -16,10 +16,22 @@ public class Jogador implements MouseListener, KeyListener {
     float xEscalaOmbro = 2.0f, yEscalaOmbro = 0.5f, zEscalaOmbro = 0.4f;
     float xEscalaTronco = 1.0f, yEscalaTronco = 1.3f, zEscalaTronco = 0.4f;
     float xEscalaPerna = 0.5f, yEscalaPerna = 2.0f, zEscalaPerna = 0.4f;
+    float xPosicao, yPosicao, zPosicao; //variáveis de posição do jogador
     
     
-    
+    /**
+     * Método desenha um jogador
+     * 
+     * @param gl
+     * @param glu
+     * @param glut
+     * @param xPosicao
+     * @param yPosicao
+     * @param zPosicao 
+     */
     public void desenhaJogador(GL2 gl, GLU glu, GLUT glut, float xPosicao, float yPosicao, float zPosicao) {       
+        //receber a posição e coloca-la nas variáveis da classe
+        this.xPosicao = xPosicao; this.yPosicao = yPosicao; this.zPosicao = zPosicao;
         
         gl.glPushMatrix();
         
