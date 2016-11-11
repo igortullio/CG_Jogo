@@ -17,7 +17,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import javax.swing.JFrame;
 
-
+//Comentario de teste
 public class Principal  implements GLEventListener, KeyListener {
 
     static JFrame frame;// A janela
