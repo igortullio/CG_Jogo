@@ -18,10 +18,13 @@ import javax.swing.JFrame;
 
 public class Principal  implements GLEventListener, KeyListener {
 
-    static JFrame frame;// A janela
+    /*----- Variáveis da classe -----*/
+    static JFrame frame; // A janela
     static Menu menu; // JPanel do Menu
-    static GLCanvas canvas;
+    static GLCanvas canvas; // tela do jogo
     
+    private boolean luz;
+
     Campo campo;
     GL2 gl;
     GLU glu;
@@ -43,6 +46,9 @@ public class Principal  implements GLEventListener, KeyListener {
         
         menu = new Menu(); // cria o objeto do tipo JPanel
 
+        frame = new JFrame("CG - Futebol Americano");
+        frame.setSize(menu.d);
+        menu.setSize(menu.d);
         frame = new JFrame("FumbleCG");
         frame.setSize(1900, 1000);
         frame.add(menu, BorderLayout.CENTER);
@@ -59,9 +65,8 @@ public class Principal  implements GLEventListener, KeyListener {
         Principal app = new Principal();
         canvas.addGLEventListener(app);
         canvas.addKeyListener(app);
-        
         menu.addKeyListener(app);
-        
+                
         canvas.setVisible(false);
         menu.setVisible(true);
         
@@ -74,14 +79,25 @@ public class Principal  implements GLEventListener, KeyListener {
     
     @Override
     public void init(GLAutoDrawable glad) {
-        
-        //gl.glClearColor(0.0f, 0.0f, 0.0f, 0.0f);        
-        
+                
         campo = new Campo();
         
         gl = glad.getGL().getGL2();
         glu = new GLU();
         glut = new GLUT();
+        luz = true;
+        
+        //Habilita a iluminação
+        gl.glEnable(GL2.GL_LIGHTING);
+        gl.glEnable(GL2.GL_COLOR_MATERIAL);
+        
+        // Habilita o modelo de colorização de Gouraud
+        gl.glShadeModel(GL2.GL_SMOOTH);
+        
+        gl.glColorMaterial(GL2.GL_FRONT_AND_BACK, GL2.GL_AMBIENT_AND_DIFFUSE);	
+
+        // Cor da tela de fundo
+        gl.glClearColor(0.52f, 0.8f, 0.92f, 0.5f);
                 
         xPosicaoQB = 0.0f;
         yPosicaoQB = 2.0f;
@@ -117,14 +133,23 @@ public class Principal  implements GLEventListener, KeyListener {
 
     @Override
     public void display(GLAutoDrawable glad) {
-                
-        gl.glClear(GL.GL_COLOR_BUFFER_BIT);        
         
-        //gl.glLoadIdentity();
+        gl.glClear(GL.GL_COLOR_BUFFER_BIT | GL.GL_DEPTH_BUFFER_BIT);
+                
+        gl.glClear(GL.GL_COLOR_BUFFER_BIT);
+        
+//        gl.glLoadIdentity();
         
         /*glu.gluLookAt(0f, 0f, 0f, 
                       0, 0, 0, 
                       0, 0, 0);*/
+        
+        // acende ou apaga a luz dependendo do valor de "luz"
+        if (luz)
+            gl.glEnable(GL2.GL_LIGHT0);
+        else
+            gl.glDisable(GL2.GL_LIGHT0);
+        defineIluminacao();
                       
         campo.renderizaCampo(gl, glu, glut);
         
@@ -181,11 +206,34 @@ public class Principal  implements GLEventListener, KeyListener {
         
     }
 
+    private void defineIluminacao() {
+        
+        float posicaoLuz[]={-1.0f, 1.0f, -1.0f, 0.0f}; // �ltimo par�metro: 0-direcional, 1-pontual/posicional 
+        
+        //Define os parâmetros através de vetores RGBA - o último valor deve ser sempre 1.0f 
+      //float   vetor[]=  {  r ,   g ,   b ,   a };  
+        float luzDifusa[]={1.0f, 1.0f, 1.0f, 1.0f};  
+
+        //Define os parâmetros da luz de n�mero 0
+        gl.glLightfv(GL2.GL_LIGHT0, GL2.GL_POSITION, posicaoLuz, 0 );
+        gl.glLightfv(GL2.GL_LIGHT0, GL2.GL_DIFFUSE, luzDifusa, 0 );
+        
+        // Brilho do material
+        float especularidade[]={1.0f, 1.0f, 1.0f, 1.0f};
+        int especMaterial = 20;
+
+        // Define a reflectância do material 
+        gl.glMaterialfv(GL.GL_FRONT, GL2.GL_SPECULAR, especularidade, 0);
+        // Define a concentração do brilho
+        gl.glMateriali(GL.GL_FRONT, GL2.GL_SHININESS, especMaterial);
+
+    }
+
     @Override
-    public void reshape(GLAutoDrawable glad, int x, int y, int w, int h) {
+    public void reshape(GLAutoDrawable glad, int x, int y, int width, int heigth) {
                      
         gl.glMatrixMode(GL2.GL_PROJECTION);
-        glu.gluPerspective(65.0, (float) w / (float) h, 1.0, 20.0);
+        glu.gluPerspective(65.0, (float) width / (float) heigth, 1.0, 20.0);
         gl.glTranslatef(0.0f, 0.0f, -10.0f);
                 
     }
@@ -196,9 +244,16 @@ public class Principal  implements GLEventListener, KeyListener {
     }
 
     @Override
-    public void keyPressed(KeyEvent e) {                
+    public void keyPressed(KeyEvent e) {               
         
         switch (e.getKeyCode()) {
+            case KeyEvent.VK_F1:
+                luz = !luz;
+                System.out.println("luz = "+luz);
+                break;
+            case KeyEvent.VK_ESCAPE:
+                System.exit(0);
+                break;
             case KeyEvent.VK_UP:
                 if (zPosicaoQB > 6.2) {
                     zPosicaoQB -= 0.2f; 

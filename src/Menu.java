@@ -19,7 +19,7 @@ import javax.swing.JOptionPane;
 public class Menu extends javax.swing.JPanel {
 
     Toolkit tk = Toolkit.getDefaultToolkit();
-    Dimension d = tk.getScreenSize(); // pega o tamanho da tela
+    Dimension d = tk.getScreenSize(); // pega o tamanho do monitor
 
     BufferedImage imgMenu;
 
@@ -61,7 +61,6 @@ public class Menu extends javax.swing.JPanel {
         lbTitulo = new javax.swing.JLabel();
         btSair = new javax.swing.JButton();
 
-        setMinimumSize(new java.awt.Dimension(d.height, d.width));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         btIniciar.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
