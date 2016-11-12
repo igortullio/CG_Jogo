@@ -27,7 +27,6 @@ public class Menu extends javax.swing.JPanel {
      * Creates new form pnMenu
      */
     public Menu() {
-        System.out.printf("Tela %dx%d\n", d.width, d.height);
         initComponents();
         
         //carregar a imagem do menu
