@@ -93,7 +93,7 @@ public class Principal  implements GLEventListener, KeyListener {
         
         gl.glColorMaterial(GL2.GL_FRONT_AND_BACK, GL2.GL_AMBIENT_AND_DIFFUSE);	
 
-
+        gl.glClearColor(0.52f, 0.8f, 0.92f, 0.5f);
         
     }
 
