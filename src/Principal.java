@@ -35,7 +35,7 @@ public class Principal  implements GLEventListener, KeyListener {
             xPosicaoWR3, yPosicaoWR3, zPosicaoWR3,
             xPosicaoBola, yPosicaoBola, zPosicaoBola;
     int tempo, frames;   
-    boolean movimentacaoBola;
+    boolean movimentacaoBola, pause;
     char teclaApertada;
     
     public static void main(String[] args) {
@@ -46,10 +46,9 @@ public class Principal  implements GLEventListener, KeyListener {
         
         menu = new Menu(); // cria o objeto do tipo JPanel
 
-        frame = new JFrame("CG - Futebol Americano");
+        frame = new JFrame("FumbleCG");
         frame.setSize(menu.d);
         menu.setSize(menu.d);
-        frame = new JFrame("FumbleCG");
         frame.setSize(1900, 1000);
         frame.add(menu, BorderLayout.CENTER);
         frame.setVisible(true);
@@ -123,6 +122,7 @@ public class Principal  implements GLEventListener, KeyListener {
         frames = 0;
         
         movimentacaoBola = false;
+        pause = false;
                 
     }
 
@@ -153,46 +153,49 @@ public class Principal  implements GLEventListener, KeyListener {
                       
         campo.renderizaCampo(gl, glu, glut);
         
-        if (!movimentacaoBola) {
-            frames += 1;        
-            
-            if (frames == 60) {
-                tempo += 1;
+        if (!pause) {
+                    
+            if (!movimentacaoBola) {
+                frames += 1;        
 
-                if (zPosicaoWR1 > 0.5f) {
-                    zPosicaoWR1 -= 0.2f;
-                    zPosicaoWR2 -= 0.2f;
-                    zPosicaoWR3 -= 0.2f;                
-                }                
-                
-                frames = 0;                            
-            }            
-        } else {
-            switch (teclaApertada) {
-                case 'Q':
-                    if (zPosicaoBola > zPosicaoWR1) {                        
-                        zPosicaoBola -= 0.2f;
-                    }
-                    if (xPosicaoBola > xPosicaoWR1) {
-                        xPosicaoBola -= 0.2;
-                    }
-                    break;
-                case 'W':
-                    if (zPosicaoBola > zPosicaoWR2) {                        
-                        zPosicaoBola -= 0.2f;
-                    }
-                    if (xPosicaoBola < xPosicaoWR2) {
-                        xPosicaoBola += 0.2;
-                    }
-                    break;
-                case 'E':
-                    if (zPosicaoBola > zPosicaoWR3) {                        
-                        zPosicaoBola -= 0.2f;
-                    }
-                    if (xPosicaoBola < xPosicaoWR3) {
-                        xPosicaoBola += 0.2;
-                    }
-                    break;                
+                if (frames == 60) {
+                    tempo += 1;
+
+                    if (zPosicaoWR1 > 0.5f) {
+                        zPosicaoWR1 -= 0.2f;
+                        zPosicaoWR2 -= 0.2f;
+                        zPosicaoWR3 -= 0.2f;                
+                    }                
+
+                    frames = 0;                            
+                }            
+            } else {
+                switch (teclaApertada) {
+                    case 'Q':
+                        if (zPosicaoBola > zPosicaoWR1) {                        
+                            zPosicaoBola -= 0.2f;
+                        }
+                        if (xPosicaoBola > xPosicaoWR1) {
+                            xPosicaoBola -= 0.2;
+                        }
+                        break;
+                    case 'W':
+                        if (zPosicaoBola > zPosicaoWR2) {                        
+                            zPosicaoBola -= 0.2f;
+                        }
+                        if (xPosicaoBola < xPosicaoWR2) {
+                            xPosicaoBola += 0.2;
+                        }
+                        break;
+                    case 'E':
+                        if (zPosicaoBola > zPosicaoWR3) {                        
+                            zPosicaoBola -= 0.2f;
+                        }
+                        if (xPosicaoBola < xPosicaoWR3) {
+                            xPosicaoBola += 0.2;
+                        }
+                        break;                
+                }
             }
         }
                                        
@@ -204,29 +207,6 @@ public class Principal  implements GLEventListener, KeyListener {
 
         desenhaBola();
         
-    }
-
-    private void defineIluminacao() {
-        
-        float posicaoLuz[]={-1.0f, 1.0f, -1.0f, 0.0f}; // �ltimo par�metro: 0-direcional, 1-pontual/posicional 
-        
-        //Define os parâmetros através de vetores RGBA - o último valor deve ser sempre 1.0f 
-      //float   vetor[]=  {  r ,   g ,   b ,   a };  
-        float luzDifusa[]={1.0f, 1.0f, 1.0f, 1.0f};  
-
-        //Define os parâmetros da luz de n�mero 0
-        gl.glLightfv(GL2.GL_LIGHT0, GL2.GL_POSITION, posicaoLuz, 0 );
-        gl.glLightfv(GL2.GL_LIGHT0, GL2.GL_DIFFUSE, luzDifusa, 0 );
-        
-        // Brilho do material
-        float especularidade[]={1.0f, 1.0f, 1.0f, 1.0f};
-        int especMaterial = 20;
-
-        // Define a reflectância do material 
-        gl.glMaterialfv(GL.GL_FRONT, GL2.GL_SPECULAR, especularidade, 0);
-        // Define a concentração do brilho
-        gl.glMateriali(GL.GL_FRONT, GL2.GL_SHININESS, especMaterial);
-
     }
 
     @Override
@@ -249,46 +229,66 @@ public class Principal  implements GLEventListener, KeyListener {
         switch (e.getKeyCode()) {
             case KeyEvent.VK_F1:
                 luz = !luz;
-                System.out.println("luz = "+luz);
                 break;
             case KeyEvent.VK_ESCAPE:
                 System.exit(0);
                 break;
             case KeyEvent.VK_UP:
-                if (zPosicaoQB > 6.2) {
-                    zPosicaoQB -= 0.2f; 
-                    zPosicaoBola -= 0.2f;
-                }                
+                if (!pause) {                    
+                    if (zPosicaoQB > 6.2) {
+                        zPosicaoQB -= 0.2f; 
+                        zPosicaoBola -= 0.2f;
+                    }                
+                }
                 break;
             case KeyEvent.VK_DOWN:
-                if (zPosicaoQB < 7.0) {
-                    zPosicaoQB += 0.2f;   
-                    zPosicaoBola += 0.2f;
-                }                
+                if (!pause) {                    
+                    if (zPosicaoQB < 7.0) {
+                        zPosicaoQB += 0.2f;   
+                        zPosicaoBola += 0.2f;
+                    }                
+                }
                 break;
             case KeyEvent.VK_RIGHT:
-                if (xPosicaoQB < 2.2) {
-                    xPosicaoQB += 0.2f;
-                    xPosicaoBola += 0.2f;
+                if (!pause) {                    
+                    if (xPosicaoQB < 2.2) {
+                        xPosicaoQB += 0.2f;
+                        xPosicaoBola += 0.2f;
+                    }
                 }
                 break;
             case KeyEvent.VK_LEFT:
-                if (xPosicaoQB > -2.2) {
-                    xPosicaoQB -= 0.2f;
-                    xPosicaoBola -= 0.2f;
+                if (!pause) {                    
+                    if (xPosicaoQB > -2.2) {
+                        xPosicaoQB -= 0.2f;
+                        xPosicaoBola -= 0.2f;
+                    }
                 }
                 break;
             case KeyEvent.VK_Q:
-                movimentacaoBola = true;
-                teclaApertada = 'Q'; 
+                if (!pause) {                    
+                    movimentacaoBola = true;
+                    teclaApertada = 'Q'; 
+                }
                 break;
             case KeyEvent.VK_W:
-                movimentacaoBola = true;
-                teclaApertada = 'W';
+                if (!pause) {                    
+                    movimentacaoBola = true;
+                    teclaApertada = 'W';
+                }
                 break;
             case KeyEvent.VK_E:
-                movimentacaoBola = true;
-                teclaApertada = 'E';
+                if (!pause) {                    
+                    movimentacaoBola = true;
+                    teclaApertada = 'E';
+                }
+                break;
+            case KeyEvent.VK_P:
+                if (pause) {
+                    pause = false;
+                } else {
+                    pause = true;
+                }
                 break;
         }
 
@@ -676,6 +676,29 @@ public class Principal  implements GLEventListener, KeyListener {
             
         gl.glPopMatrix();
         
+    }
+    
+    private void defineIluminacao() {
+        
+        float posicaoLuz[]={-1.0f, 1.0f, -1.0f, 0.0f}; // �ltimo par�metro: 0-direcional, 1-pontual/posicional 
+        
+        //Define os parâmetros através de vetores RGBA - o último valor deve ser sempre 1.0f 
+      //float   vetor[]=  {  r ,   g ,   b ,   a };  
+        float luzDifusa[]={1.0f, 1.0f, 1.0f, 1.0f};  
+
+        //Define os parâmetros da luz de n�mero 0
+        gl.glLightfv(GL2.GL_LIGHT0, GL2.GL_POSITION, posicaoLuz, 0 );
+        gl.glLightfv(GL2.GL_LIGHT0, GL2.GL_DIFFUSE, luzDifusa, 0 );
+        
+        // Brilho do material
+        float especularidade[]={1.0f, 1.0f, 1.0f, 1.0f};
+        int especMaterial = 20;
+
+        // Define a reflectância do material 
+        gl.glMaterialfv(GL.GL_FRONT, GL2.GL_SPECULAR, especularidade, 0);
+        // Define a concentração do brilho
+        gl.glMateriali(GL.GL_FRONT, GL2.GL_SHININESS, especMaterial);
+
     }
     
 }
