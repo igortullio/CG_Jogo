@@ -128,14 +128,14 @@ public class Menu extends javax.swing.JPanel {
         taExplicacao1.setFont(new java.awt.Font("Arial Black", 0, 13)); // NOI18N
         taExplicacao1.setLineWrap(true);
         taExplicacao1.setRows(5);
-        taExplicacao1.setText("Em resumo é simples: O time que tem a posse de bola tenta avançar gradualmente em jogadas de curta duração - os chamados \"downs\". Se conseguir levar a bola até a endzone do adversário, marca touchdown e conquista 6 pontos. \n\nAqui abordamos o passe e a recepção:\nO quarterback pode arremessar a bola para um recebedor avançado. Mas isto é permitido apenas uma vez por jogada. E o passe deve ser realizado atrás da linha de scrimmage (a linha onde começou a jogada). A recepção só é válida se o jogador segurar a bola antes de ela tocar no chão.");
+        taExplicacao1.setText("Aqui abordamos o passe e a recepção:\nO quarterback pode arremessar a bola para um recebedor avançado. E o passe deve ser realizado atrás da linha de scrimmage (a linha onde começou a jogada). A recepção só é válida se o jogador segurar a bola antes de ela tocar no chão.");
         taExplicacao1.setToolTipText("Regras");
         taExplicacao1.setWrapStyleWord(true);
         taExplicacao1.setSelectionColor(new java.awt.Color(255, 255, 255));
         spAjuda1.setViewportView(taExplicacao1);
 
         add(spAjuda1);
-        spAjuda1.setBounds(20, 280, 370, 300);
+        spAjuda1.setBounds(20, 280, 370, 140);
 
         lbAjuda1.setFont(new java.awt.Font("Arial Black", 0, 18)); // NOI18N
         lbAjuda1.setText("COMO FUNCIONA O JOGO");

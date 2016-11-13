@@ -136,7 +136,7 @@
       </AuxValues>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-          <AbsoluteConstraints x="20" y="280" width="370" height="300"/>
+          <AbsoluteConstraints x="20" y="280" width="370" height="140"/>
         </Constraint>
       </Constraints>
 
@@ -151,7 +151,7 @@
             </Property>
             <Property name="lineWrap" type="boolean" value="true"/>
             <Property name="rows" type="int" value="5"/>
-            <Property name="text" type="java.lang.String" value="Em resumo &#xe9; simples: O time que tem a posse de bola tenta avan&#xe7;ar gradualmente em jogadas de curta dura&#xe7;&#xe3;o - os chamados &quot;downs&quot;. Se conseguir levar a bola at&#xe9; a endzone do advers&#xe1;rio, marca touchdown e conquista 6 pontos. &#xa;&#xa;Aqui abordamos o passe e a recep&#xe7;&#xe3;o:&#xa;O quarterback pode arremessar a bola para um recebedor avan&#xe7;ado. Mas isto &#xe9; permitido apenas uma vez por jogada. E o passe deve ser realizado atr&#xe1;s da linha de scrimmage (a linha onde come&#xe7;ou a jogada). A recep&#xe7;&#xe3;o s&#xf3; &#xe9; v&#xe1;lida se o jogador segurar a bola antes de ela tocar no ch&#xe3;o."/>
+            <Property name="text" type="java.lang.String" value="Aqui abordamos o passe e a recep&#xe7;&#xe3;o:&#xa;O quarterback pode arremessar a bola para um recebedor avan&#xe7;ado. E o passe deve ser realizado atr&#xe1;s da linha de scrimmage (a linha onde come&#xe7;ou a jogada). A recep&#xe7;&#xe3;o s&#xf3; &#xe9; v&#xe1;lida se o jogador segurar a bola antes de ela tocar no ch&#xe3;o."/>
             <Property name="toolTipText" type="java.lang.String" value="Regras"/>
             <Property name="wrapStyleWord" type="boolean" value="true"/>
             <Property name="selectionColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
