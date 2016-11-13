@@ -26,7 +26,6 @@ public class Principal extends JFrame implements GLEventListener, KeyListener {
     private boolean luz;
 
     Campo campo;
-    Trave trave;
     GL2 gl;
     GLU glu;
     GLUT glut; 
@@ -87,7 +86,6 @@ public class Principal extends JFrame implements GLEventListener, KeyListener {
     public void init(GLAutoDrawable drawable) {
                 
         campo = new Campo();
-        trave = new Trave();
         
         gl = drawable.getGL().getGL2();
         glu = new GLU();
@@ -177,7 +175,6 @@ public class Principal extends JFrame implements GLEventListener, KeyListener {
         defineIluminacao();
                       
         campo.renderizaCampo(gl, glu, glut);
-        trave.renderizaTrave(gl, glu, glut);
         
         if (!pause) {
                     
