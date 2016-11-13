@@ -12,11 +12,13 @@ import com.jogamp.opengl.util.gl2.GLUT;
 import java.awt.BorderLayout;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import javax.swing.JFrame;
 
-public class Principal extends JFrame implements GLEventListener, KeyListener {
+public class Principal extends MouseAdapter implements GLEventListener, KeyListener {
 
     /*----- Variáveis da classe -----*/
     static JFrame frame; // A janela
@@ -62,6 +64,7 @@ public class Principal extends JFrame implements GLEventListener, KeyListener {
         
 
         frame.addWindowListener(new WindowAdapter() {
+            @Override
             public void windowClosing(WindowEvent e) {
                 System.exit(0);
             }
@@ -70,6 +73,7 @@ public class Principal extends JFrame implements GLEventListener, KeyListener {
         Principal app = new Principal();
         canvas.addGLEventListener(app);
         canvas.addKeyListener(app);
+        canvas.addMouseListener(app);
         menu.addKeyListener(app);
                 
         canvas.setVisible(false);
@@ -168,10 +172,15 @@ public class Principal extends JFrame implements GLEventListener, KeyListener {
                       0, 0, 0);*/
         
         // acende ou apaga a luz dependendo do valor de "luz"
-        if (luz)
+        if (luz){
             gl.glEnable(GL2.GL_LIGHT0);
-        else
+            gl.glEnable(GL2.GL_LIGHT1);
+            gl.glEnable(GL2.GL_LIGHT2);
+        } else {
             gl.glDisable(GL2.GL_LIGHT0);
+            gl.glDisable(GL2.GL_LIGHT1);
+            gl.glDisable(GL2.GL_LIGHT2);
+        }
         defineIluminacao();
                       
         campo.renderizaCampo(gl, glu, glut);
@@ -291,6 +300,12 @@ public class Principal extends JFrame implements GLEventListener, KeyListener {
         gl.glTranslatef(0.0f, 0.0f, -10.0f);
                 
     }
+    @Override
+    public void mouseClicked(MouseEvent e){
+        if (e.getButton() == MouseEvent.BUTTON1) {
+            luz = !luz;
+        }
+    }
 
     @Override
     public void keyTyped(KeyEvent e) {}
@@ -299,9 +314,6 @@ public class Principal extends JFrame implements GLEventListener, KeyListener {
     public void keyPressed(KeyEvent e) {               
         
         switch (e.getKeyCode()) {
-            case KeyEvent.VK_F1:
-                luz = !luz;
-                break;
             case KeyEvent.VK_ESCAPE:
                 System.exit(0);
                 break;
@@ -356,11 +368,7 @@ public class Principal extends JFrame implements GLEventListener, KeyListener {
                 }
                 break;
             case KeyEvent.VK_P:
-                if (pause) {
-                    pause = false;
-                } else {
-                    pause = true;
-                }
+                pause = !pause;
                 break;
         }
 
