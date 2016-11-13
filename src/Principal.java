@@ -86,17 +86,23 @@ public class Principal  implements GLEventListener, KeyListener {
         glut = new GLUT();
         luz = true;
         
+        // Cor da tela de fundo
+        gl.glClearColor(0.52f, 0.8f, 0.92f, 0.5f);
+        
+        // Habilita o depth-buffering
+        gl.glEnable(GL.GL_DEPTH_TEST);
+        
         //Habilita a iluminação
+        gl.glEnable(GL2.GL_LIGHT0);
+        gl.glEnable(GL2.GL_LIGHT1);
+        gl.glEnable(GL2.GL_LIGHT2);
         gl.glEnable(GL2.GL_LIGHTING);
         gl.glEnable(GL2.GL_COLOR_MATERIAL);
         
+        gl.glColorMaterial(GL2.GL_FRONT_AND_BACK, GL2.GL_AMBIENT_AND_DIFFUSE);
+        
         // Habilita o modelo de colorização de Gouraud
         gl.glShadeModel(GL2.GL_SMOOTH);
-        
-        gl.glColorMaterial(GL2.GL_FRONT_AND_BACK, GL2.GL_AMBIENT_AND_DIFFUSE);	
-
-        // Cor da tela de fundo
-        gl.glClearColor(0.52f, 0.8f, 0.92f, 0.5f);
                 
         xPosicaoQB = 0.0f;
         yPosicaoQB = 2.0f;
@@ -127,16 +133,12 @@ public class Principal  implements GLEventListener, KeyListener {
     }
 
     @Override
-    public void dispose(GLAutoDrawable glad) {
-        
-    }
+    public void dispose(GLAutoDrawable glad) {}
 
     @Override
     public void display(GLAutoDrawable glad) {
         
         gl.glClear(GL.GL_COLOR_BUFFER_BIT | GL.GL_DEPTH_BUFFER_BIT);
-                
-        gl.glClear(GL.GL_COLOR_BUFFER_BIT);
         
 //        gl.glLoadIdentity();
         
@@ -208,6 +210,45 @@ public class Principal  implements GLEventListener, KeyListener {
         desenhaBola();
         
     }
+    
+    private void defineIluminacao() {
+        
+        float posicaoLuz0[]={-1.0f, 1.0f, -1.0f, 0.0f}; // último parâmetro: 0-direcional, 1-pontual/posicional 
+        float posicaoLuz1[]={1.0f, 1.0f, -1.0f, 0.0f}; // último parâmetro: 0-direcional, 1-pontual/posicional 
+        float posicaoLuz2[]={0.0f, 0.0f, 1.0f, 0.0f}; // último parâmetro: 0-direcional, 1-pontual/posicional 
+        
+        //Define os parâmetros através de vetores RGBA 
+      //float   vetor[] =    {  r ,   g ,   b ,   a };  
+        float luzAmbiente[]= {1.0f, 1.0f, 1.0f, 0.5f};
+        float luzEspecular[]={1.0f, 1.0f, 1.0f, 0.5f};		
+
+        
+        //Ativa o uso da luz ambiente 
+        gl.glLightModelfv(GL2.GL_LIGHT_MODEL_AMBIENT, luzAmbiente, 0);
+
+        //Define os parâmetros da luz de número 0
+        gl.glLightfv(GL2.GL_LIGHT0, GL2.GL_POSITION, posicaoLuz0, 0 );
+        gl.glLightfv(GL2.GL_LIGHT0, GL2.GL_SPECULAR, luzEspecular, 0);
+
+        
+        //Define os parâmetros da luz de número 1
+        gl.glLightfv(GL2.GL_LIGHT1, GL2.GL_POSITION, posicaoLuz1, 0 );
+        gl.glLightfv(GL2.GL_LIGHT1, GL2.GL_SPECULAR, luzEspecular, 0);
+        
+        //Define os parâmetros da luz de número 2
+        gl.glLightfv(GL2.GL_LIGHT2, GL2.GL_POSITION, posicaoLuz2, 0 );
+        gl.glLightfv(GL2.GL_LIGHT2, GL2.GL_SPECULAR, luzEspecular, 0);
+        
+        // Brilho do material
+        float especularidade[]={0.2f, 0.2f, 0.2f, 1.0f};
+        int especMaterial = 20;
+
+        // Define a reflectância do material 
+        gl.glMaterialfv(GL.GL_FRONT, GL2.GL_SPECULAR, especularidade, 0);
+        // Define a concentração do brilho
+        gl.glMateriali(GL.GL_FRONT, GL2.GL_SHININESS, especMaterial);
+        
+    }
 
     @Override
     public void reshape(GLAutoDrawable glad, int x, int y, int width, int heigth) {
@@ -219,9 +260,7 @@ public class Principal  implements GLEventListener, KeyListener {
     }
 
     @Override
-    public void keyTyped(KeyEvent e) {
-        
-    }
+    public void keyTyped(KeyEvent e) {}
 
     @Override
     public void keyPressed(KeyEvent e) {               
@@ -296,9 +335,7 @@ public class Principal  implements GLEventListener, KeyListener {
     }
 
     @Override
-    public void keyReleased(KeyEvent e) {
-        
-    }
+    public void keyReleased(KeyEvent e) {}
     
     //Métodos que desenham os jogadores ------------------------------------------------------------------
     
@@ -676,29 +713,6 @@ public class Principal  implements GLEventListener, KeyListener {
             
         gl.glPopMatrix();
         
-    }
-    
-    private void defineIluminacao() {
-        
-        float posicaoLuz[]={-1.0f, 1.0f, -1.0f, 0.0f}; // �ltimo par�metro: 0-direcional, 1-pontual/posicional 
-        
-        //Define os parâmetros através de vetores RGBA - o último valor deve ser sempre 1.0f 
-      //float   vetor[]=  {  r ,   g ,   b ,   a };  
-        float luzDifusa[]={1.0f, 1.0f, 1.0f, 1.0f};  
-
-        //Define os parâmetros da luz de n�mero 0
-        gl.glLightfv(GL2.GL_LIGHT0, GL2.GL_POSITION, posicaoLuz, 0 );
-        gl.glLightfv(GL2.GL_LIGHT0, GL2.GL_DIFFUSE, luzDifusa, 0 );
-        
-        // Brilho do material
-        float especularidade[]={1.0f, 1.0f, 1.0f, 1.0f};
-        int especMaterial = 20;
-
-        // Define a reflectância do material 
-        gl.glMaterialfv(GL.GL_FRONT, GL2.GL_SPECULAR, especularidade, 0);
-        // Define a concentração do brilho
-        gl.glMateriali(GL.GL_FRONT, GL2.GL_SHININESS, especMaterial);
-
     }
     
 }
