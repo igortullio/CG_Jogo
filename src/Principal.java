@@ -33,7 +33,13 @@ public class Principal  implements GLEventListener, KeyListener {
             xPosicaoWR1, yPosicaoWR1, zPosicaoWR1,
             xPosicaoWR2, yPosicaoWR2, zPosicaoWR2,
             xPosicaoWR3, yPosicaoWR3, zPosicaoWR3,
-            xPosicaoBola, yPosicaoBola, zPosicaoBola;
+            xPosicaoBola, yPosicaoBola, zPosicaoBola,
+            WR1rotateBracoDireito, WR1translatefBracoDireito,
+            WR1rotateBracoEsquerdo, WR1translatefBracoEsquerdo,
+            WR2rotateBracoDireito, WR2translatefBracoDireito,
+            WR2rotateBracoEsquerdo, WR2translatefBracoEsquerdo,
+            WR3rotateBracoDireito, WR3translatefBracoDireito,
+            WR3rotateBracoEsquerdo, WR3translatefBracoEsquerdo;
     int tempo, frames;   
     boolean movimentacaoBola, pause;
     char teclaApertada;
@@ -123,6 +129,21 @@ public class Principal  implements GLEventListener, KeyListener {
         xPosicaoBola = 0.4f;
         yPosicaoBola = -0.7f;
         zPosicaoBola = 7.0f;
+        
+        WR1rotateBracoDireito = 110.0f;
+        WR1translatefBracoDireito = 0.0f;
+        WR1rotateBracoEsquerdo = 70.0f;
+        WR1translatefBracoEsquerdo = 0.0f;
+        
+        WR2rotateBracoDireito = 110.0f;
+        WR2translatefBracoDireito = 0.0f;
+        WR2rotateBracoEsquerdo = 70.0f;
+        WR2translatefBracoEsquerdo = 0.0f;
+        
+        WR3rotateBracoDireito = 110.0f;
+        WR3translatefBracoDireito = 0.0f;
+        WR3rotateBracoEsquerdo = 70.0f;
+        WR3translatefBracoEsquerdo = 0.0f;
                 
         tempo = 0;
         frames = 0;
@@ -174,6 +195,10 @@ public class Principal  implements GLEventListener, KeyListener {
             } else {
                 switch (teclaApertada) {
                     case 'Q':
+                        WR1rotateBracoDireito = 90.0f;
+                        WR1translatefBracoDireito = 0.4f;
+                        WR1rotateBracoEsquerdo = 90.0f;
+                        WR1translatefBracoEsquerdo = 0.4f;
                         if (zPosicaoBola > zPosicaoWR1) {                        
                             zPosicaoBola -= 0.2f;
                         }
@@ -182,6 +207,10 @@ public class Principal  implements GLEventListener, KeyListener {
                         }
                         break;
                     case 'W':
+                        WR2rotateBracoDireito = 90.0f;
+                        WR2translatefBracoDireito = 0.4f;
+                        WR2rotateBracoEsquerdo = 90.0f;
+                        WR2translatefBracoEsquerdo = 0.4f;
                         if (zPosicaoBola > zPosicaoWR2) {                        
                             zPosicaoBola -= 0.2f;
                         }
@@ -190,6 +219,10 @@ public class Principal  implements GLEventListener, KeyListener {
                         }
                         break;
                     case 'E':
+                        WR3rotateBracoDireito = 90.0f;
+                        WR3translatefBracoDireito = 0.4f;
+                        WR3rotateBracoEsquerdo = 90.0f;
+                        WR3translatefBracoEsquerdo = 0.4f;
                         if (zPosicaoBola > zPosicaoWR3) {                        
                             zPosicaoBola -= 0.2f;
                         }
@@ -489,8 +522,8 @@ public class Principal  implements GLEventListener, KeyListener {
             gl.glPushMatrix();
             
                 gl.glTranslatef (0.25f, -3.2f, 0.0f);
-                gl.glRotatef(110.0f, 0.0f, 0.0f, 1.0f);    
-                gl.glTranslatef (0.0f, 0.0f, 0.0f); 
+                gl.glRotatef(WR1rotateBracoDireito, 0.0f, 0.0f, 1.0f);    
+                gl.glTranslatef (WR1translatefBracoDireito, 0.0f, 0.0f); 
                 gl.glPushMatrix();
                     gl.glScalef (2.0f, 0.5f, 0.4f);                   
                     glut.glutSolidCube (0.2f);
@@ -503,8 +536,8 @@ public class Principal  implements GLEventListener, KeyListener {
             gl.glPushMatrix();       
                             
                 gl.glTranslatef (-0.25f, -3.2f, 0.0f);
-                gl.glRotatef(70.0f, 0.0f, 0.0f, 1.0f);    
-                gl.glTranslatef (-0.0f, -0f, 0.0f);
+                gl.glRotatef(WR1rotateBracoEsquerdo, 0.0f, 0.0f, 1.0f);    
+                gl.glTranslatef (WR1translatefBracoEsquerdo, -0f, 0.0f);
                 gl.glPushMatrix();
                     gl.glScalef (2.0f, 0.5f, 0.4f);
                     glut.glutSolidCube (0.2f);
@@ -579,8 +612,8 @@ public class Principal  implements GLEventListener, KeyListener {
             gl.glPushMatrix();
             
                 gl.glTranslatef (0.25f, -3.2f, 0.0f);
-                gl.glRotatef(110.0f, 0.0f, 0.0f, 1.0f);    
-                gl.glTranslatef (0.0f, 0.0f, 0.0f); 
+                gl.glRotatef(WR2rotateBracoDireito, 0.0f, 0.0f, 1.0f);    
+                gl.glTranslatef (WR2translatefBracoDireito, 0.0f, 0.0f); 
                 gl.glPushMatrix();
                     gl.glScalef (2.0f, 0.5f, 0.4f);                   
                     glut.glutSolidCube (0.2f);
@@ -593,8 +626,8 @@ public class Principal  implements GLEventListener, KeyListener {
             gl.glPushMatrix();       
                             
                 gl.glTranslatef (-0.25f, -3.2f, 0.0f);
-                gl.glRotatef(70.0f, 0.0f, 0.0f, 1.0f);    
-                gl.glTranslatef (-0.0f, -0f, 0.0f);
+                gl.glRotatef(WR2rotateBracoEsquerdo, 0.0f, 0.0f, 1.0f);    
+                gl.glTranslatef (WR2translatefBracoEsquerdo, -0f, 0.0f);
                 gl.glPushMatrix();
                     gl.glScalef (2.0f, 0.5f, 0.4f);
                     glut.glutSolidCube (0.2f);
@@ -669,8 +702,8 @@ public class Principal  implements GLEventListener, KeyListener {
             gl.glPushMatrix();
             
                 gl.glTranslatef (0.25f, -3.2f, 0.0f);
-                gl.glRotatef(110.0f, 0.0f, 0.0f, 1.0f);    
-                gl.glTranslatef (0.0f, 0.0f, 0.0f); 
+                gl.glRotatef(WR3rotateBracoDireito, 0.0f, 0.0f, 1.0f);    
+                gl.glTranslatef (WR3translatefBracoDireito, 0.0f, 0.0f); 
                 gl.glPushMatrix();
                     gl.glScalef (2.0f, 0.5f, 0.4f);                   
                     glut.glutSolidCube (0.2f);
@@ -683,8 +716,8 @@ public class Principal  implements GLEventListener, KeyListener {
             gl.glPushMatrix();       
                             
                 gl.glTranslatef (-0.25f, -3.2f, 0.0f);
-                gl.glRotatef(70.0f, 0.0f, 0.0f, 1.0f);    
-                gl.glTranslatef (-0.0f, -0f, 0.0f);
+                gl.glRotatef(WR3rotateBracoEsquerdo, 0.0f, 0.0f, 1.0f);    
+                gl.glTranslatef (WR3translatefBracoEsquerdo, -0f, 0.0f);
                 gl.glPushMatrix();
                     gl.glScalef (2.0f, 0.5f, 0.4f);
                     glut.glutSolidCube (0.2f);
