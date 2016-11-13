@@ -16,7 +16,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import javax.swing.JFrame;
 
-public class Principal  implements GLEventListener, KeyListener {
+public class Principal extends JFrame implements GLEventListener, KeyListener {
 
     /*----- Variáveis da classe -----*/
     static JFrame frame; // A janela
@@ -75,7 +75,7 @@ public class Principal  implements GLEventListener, KeyListener {
         canvas.setVisible(false);
         menu.setVisible(true);
         
-        FPSAnimator animator = new FPSAnimator(canvas, 60);
+        FPSAnimator animator = new FPSAnimator(canvas, 30);
         animator.start();
         
     }        
@@ -83,11 +83,11 @@ public class Principal  implements GLEventListener, KeyListener {
     
     
     @Override
-    public void init(GLAutoDrawable glad) {
+    public void init(GLAutoDrawable drawable) {
                 
         campo = new Campo();
         
-        gl = glad.getGL().getGL2();
+        gl = drawable.getGL().getGL2();
         glu = new GLU();
         glut = new GLUT();
         luz = true;

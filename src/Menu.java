@@ -2,15 +2,12 @@
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Toolkit;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
-import javax.swing.JOptionPane;
 
 /**
  *
@@ -60,8 +57,11 @@ public class Menu extends javax.swing.JPanel {
         btIniciar = new javax.swing.JButton();
         lbTitulo = new javax.swing.JLabel();
         btSair = new javax.swing.JButton();
+        spAjuda = new javax.swing.JScrollPane();
+        taExplicacao = new javax.swing.JTextArea();
+        lbAjuda = new javax.swing.JLabel();
 
-        setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        setLayout(null);
 
         btIniciar.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         btIniciar.setText("Iniciar Jogo!");
@@ -76,12 +76,14 @@ public class Menu extends javax.swing.JPanel {
                 btIniciarActionPerformed(evt);
             }
         });
-        add(btIniciar, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 210, 210, 80));
+        add(btIniciar);
+        btIniciar.setBounds(730, 210, 210, 80);
 
         lbTitulo.setFont(new java.awt.Font("Consolas", 0, 48)); // NOI18N
         lbTitulo.setText("FumbleCG");
         lbTitulo.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        add(lbTitulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 60, 220, 110));
+        add(lbTitulo);
+        lbTitulo.setBounds(730, 60, 220, 110);
 
         btSair.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         btSair.setText("Sair");
@@ -90,7 +92,30 @@ public class Menu extends javax.swing.JPanel {
                 btSairActionPerformed(evt);
             }
         });
-        add(btSair, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 300, 210, 80));
+        add(btSair);
+        btSair.setBounds(730, 300, 210, 80);
+
+        spAjuda.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        spAjuda.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
+
+        taExplicacao.setEditable(false);
+        taExplicacao.setColumns(20);
+        taExplicacao.setFont(new java.awt.Font("Arial Black", 0, 13)); // NOI18N
+        taExplicacao.setLineWrap(true);
+        taExplicacao.setRows(5);
+        taExplicacao.setText("Em resumo é simples: O time que tem a posse de bola tenta avançar gradualmente em jogadas de curta duração - os chamados \"downs\". Se conseguir levar a bola até a endzone do adversário, marca touchdown e conquista 6 pontos. \n\nAqui abordamos o passe e a recepção:\nO quarterback pode arremessar a bola para um recebedor avançado. Mas isto é permitido apenas uma vez por jogada. E o passe deve ser realizado atrás da linha de scrimmage (a linha onde começou a jogada). A recepção só é válida se o jogador segurar a bola antes de ela tocar no chão.");
+        taExplicacao.setToolTipText("Como Funciona o jogo");
+        taExplicacao.setWrapStyleWord(true);
+        taExplicacao.setSelectionColor(new java.awt.Color(255, 255, 255));
+        spAjuda.setViewportView(taExplicacao);
+
+        add(spAjuda);
+        spAjuda.setBounds(140, 680, 530, 230);
+
+        lbAjuda.setFont(new java.awt.Font("Arial Black", 0, 18)); // NOI18N
+        lbAjuda.setText("COMO FUNCIONA O JOGO");
+        add(lbAjuda);
+        lbAjuda.setBounds(260, 620, 280, 60);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btIniciarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btIniciarActionPerformed
@@ -107,6 +132,9 @@ public class Menu extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btIniciar;
     private javax.swing.JButton btSair;
+    private javax.swing.JLabel lbAjuda;
     private javax.swing.JLabel lbTitulo;
+    private javax.swing.JScrollPane spAjuda;
+    private javax.swing.JTextArea taExplicacao;
     // End of variables declaration//GEN-END:variables
 }
